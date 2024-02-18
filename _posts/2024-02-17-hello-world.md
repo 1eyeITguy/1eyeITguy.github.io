@@ -7,7 +7,7 @@ tags: [hello world]
 
 # Hello World
 
-Hello world, this is my first test blog post.   I'm using this post to see how to post soem PowerShell code.
+Hello world, this is my first test blog post.   I'm using this post to see how to post some PowerShell code.
 
 ### PowerShell
 
