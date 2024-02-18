@@ -19,3 +19,4 @@ $User = Read-Host
 Get-ADUser -identity $User -Properties msDS-UserPasswordExpiryTimeComputed | 
     select samaccountname,@{ Name = "Expiration Date"; Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}}
 ```
+
