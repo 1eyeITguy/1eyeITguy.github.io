@@ -16,14 +16,14 @@ timezone: America/Chicago
 
 title: Matthew Miles # the main title
 
-tagline: learningITtogether.com # it will display as the sub-title
+tagline: www.learningITtogether.com # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A blog of my IT rambelings
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://1eyeITguy.github.io"
+url: "http://www.learningittogether.com"
 
 github:
   username: 1eyeITguy # change to your github username
@@ -126,7 +126,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: ""
+baseurl: "http://www.learningittogether.com"
 
 # ------------ The following options are not recommended to be modified ------------------
 
