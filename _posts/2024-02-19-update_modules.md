@@ -3,6 +3,8 @@ title: Update PowerShell Modules
 date: 2024-02-19 19:10:04 -0600
 categories: [powershell]
 tags: [powershell]
+image:
+ path: /assets/img/headers/update-modules.webp
 ---
 
 # Updating Installed PowerShell Modules with a Script
