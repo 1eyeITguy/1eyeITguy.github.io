@@ -78,7 +78,7 @@ winget install -e --id Microsoft.PowerShell --override '/passive ADD_EXPLORER_CO
 
 7. Install Git for Windows
 ```powershell
-winget install -e --id Microsoft.PowerShell --override '/passive ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1'
+winget install --id Git.Git -e -h
 ```
 
 8. Configure Git for Windows
@@ -141,14 +141,14 @@ Install-Module -Name OSDCloud -SkipPublisherCheck
 
 ## Create the OSD Workspace
 
-Open an elevated PopwerShell 7 terminal, and run this command to create the workspace
+Open an elevated PowerShell 7 terminal, and run this command to create the workspace
 
 ```powershell
 New-OSDWorkspace
 ```
 
-This will create a new folder on yoru C drive called C:\OSDWorkspace
-* Open this folder in VSCode and watch the lower right corner of VSCode.  It will ask you if you would like to open the worksapce associated with the folder.
+This will create a new folder on your C: drive called C:\OSDWorkspace
+* Open this folder in VSCode and watch the lower right corner of VSCode. It will ask you if you would like to open the workspace associated with the folder.
 
 
 
