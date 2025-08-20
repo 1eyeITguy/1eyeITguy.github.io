@@ -34,7 +34,7 @@ The OSD.Workspace wiki lists a Recommended Client Configuration — follow that 
 
 Open an elevated PowerShell session and run the commands below. 
 
-1. Set the execution policy for this session and ensure TLS 1.2 is enabled (some gallery operations need it):
+Set the execution policy for this session and ensure TLS 1.2 is enabled (some gallery operations need it):
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force
@@ -118,8 +118,8 @@ Start-Process -FilePath "$env:TEMP\adkwinpesetup.exe" -ArgumentList '/features',
 $path = 'C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs'
 New-Item -Path $path -ItemType Directory -Force | Out-Null
 ```
-12. Install MDT
-```powershell
+12. Install MDT *(Optional)*
+```
 winget install --id Microsoft.DeploymentToolkit -e --accept-source-agreements --accept-package-agreements
 ```
 
@@ -137,7 +137,6 @@ Install-Module -Name OSD -SkipPublisherCheck
 # Optionally used in some of the OSDWorkspace Gallery functions
 Install-Module -Name OSDCloud -SkipPublisherCheck
 ```
-
 
 ## Create the OSD Workspace
 
