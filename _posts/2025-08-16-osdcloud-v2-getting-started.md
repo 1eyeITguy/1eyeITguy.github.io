@@ -243,7 +243,7 @@ Here's the full automation script for reference:
     - OSD PowerShell modules (OSD.Workspace, platyPS, OSD, OSDCloud)
     
 .NOTES
-    Author: OSDCloud Installation Script
+    Author: Matthew Miles
     Version: 2.2
     Requires: Administrator privileges
     
