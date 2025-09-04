@@ -55,7 +55,7 @@ I believe in continuous improvement and staying current with emerging technologi
 I'm always interested in connecting with fellow IT professionals, sharing knowledge, and learning from others in the community.
 
 - 🐙 **GitHub**: [@1eyeITguy](https://github.com/1eyeITguy)
-- 💼 **LinkedIn**: [Connect with me](www.linkedin.com/in/matthew-miles-54236311) 
+- 💼 **LinkedIn**: [Connect with me](https://www.linkedin.com/in/matthew-miles-54236311) 
 - 📧 **Email**: [matthew@miles-family.com](mailto:matthew@miles-family.com)
 
 > *"The best way to learn is to teach, and the best way to teach is to keep learning."*
