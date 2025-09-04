@@ -12,7 +12,7 @@ image:
 
 Setting up OSDCloud v2 involves multiple components and dependencies that need to work together. Rather than walking through each manual installation step, I've created an automation script that handles the entire workspace setup process.
 
-This is an automation solution that takes you from a fresh Windows system to a fully functional OSD.Workspace development environment. A complete step-by-step guide can be found on the official Wiki - https://github.com/OSDeploy/OSD.Workspace/wiki
+This is an automation solution that takes you from a fresh Windows system to a fully functional OSD.Workspace development environment. A complete step-by-step guide can be found on the official Wiki - [https://github.com/OSDeploy/OSD.Workspace/wiki](https://github.com/OSDeploy/OSD.Workspace/wiki)
 
 ## What Exactly Is OSDCloud v2 (OSD.Workspace)?
 
