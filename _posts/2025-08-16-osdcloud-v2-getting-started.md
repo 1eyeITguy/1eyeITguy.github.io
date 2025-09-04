@@ -10,23 +10,13 @@ image:
 
 # OSDCloud Setup: One Script Does It All
 
-Setting up OSDCloud v2 involves multiple components and dependencies that need to work together seamlessly. Rather than walking through each manual installation step, I've created a comprehensive automation script that handles the entire workspace setup process.
+Setting up OSDCloud v2 involves multiple components and dependencies that need to work together. Rather than walking through each manual installation step, I've created an automation script that handles the entire workspace setup process.
 
-This is a complete, tested automation solution that takes you from a fresh Windows system to a fully functional OSD.Workspace development environment. A complete step-by-step guide can be found on the official Wiki - https://github.com/OSDeploy/OSD.Workspace/wiki
+This is an automation solution that takes you from a fresh Windows system to a fully functional OSD.Workspace development environment. A complete step-by-step guide can be found on the official Wiki - https://github.com/OSDeploy/OSD.Workspace/wiki
 
 ## What Exactly Is OSDCloud v2 (OSD.Workspace)?
 
 **OSDCloud v2 (OSD.Workspace) is a community-driven PowerShell framework** that revolutionizes Windows deployment automation. Think of it as your complete deployment toolkit - from creating custom boot images to managing drivers, all through clean PowerShell workflows.
-
-### Why OSDCloud v2 Matters:
-
-- **Zero-Touch Deployments**: Fully automated Windows installations
-- **Multiple Deployment Methods**: Works with USB, or WDS for PXE booting
-- **PowerShell Native**: No proprietary tools or complex GUIs to learn  
-- **Community Driven**: Active development with enterprise-grade features
-- **Extensible**: Easy to customize for your specific requirements
-
-> **Full Documentation**: Complete project documentation is available at the [OSD.Workspace Wiki](https://github.com/OSDeploy/OSD.Workspace/wiki). I'll reference specific pages throughout this guide.
 
 ## Why Automate the Setup Process?
 
