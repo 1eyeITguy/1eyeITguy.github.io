@@ -61,12 +61,19 @@ Rather than walking you through manual steps, I've created a PowerShell script t
 
 You can download the full automation script from my GitHub repository:
 
-**[Setup-OSDWorkspace.ps1](https://github.com/1eyeITguy/learningITtogether/blob/main/Scripts/OSDCloud/Setup-OSDWorksapce.ps1)**
+**[Setup-OSDWorkspace.ps1](https://github.com/1eyeITguy/learningITtogether/blob/main/Scripts/OSDCloud/Setup-OSDWorkspace.ps1)**
 
 ### What the Script Does
 
-The script handles these major installation phases:
+The script operates in two phases for maximum transparency and control:
 
+#### Phase 1: System Analysis
+1. **Comprehensive Prerequisite Scan** - Analyzes your entire system to identify what's already installed
+2. **Detailed Status Report** - Shows exactly what's missing, what needs configuration, and what's already complete
+3. **Interactive Summary** - Presents a clear breakdown before making any changes
+4. **User Confirmation** - Allows you to review and approve the installation plan
+
+#### Phase 2: Automated Installation
 1. **System Prerequisites Check** - Validates admin privileges and PowerShell version
 2. **PowerShell Security Configuration** - Sets execution policies and TLS protocols
 3. **Package Provider Setup** - Installs NuGet and configures PowerShell Gallery
@@ -76,18 +83,21 @@ The script handles these major installation phases:
 7. **Windows ADK Installation** - Both main toolkit and WinPE add-on
 8. **Compatibility Fixes** - MDT WinPE x86 directory creation
 9. **OSD Module Installation** - All required OSDCloud PowerShell modules
-10. **Post-Installation Guidance** - Clear next steps for workspace creation
+10. **Post-Installation Verification** - Confirms all components installed correctly
 
 ### Key Script Features
 
+- **Two-Phase Approach**: First scans your system, then shows you exactly what will be installed before making changes
+- **Comprehensive Analysis**: Detailed prerequisite scanning with clear status reporting
+- **Interactive Confirmation**: Review the installation plan and choose optional components
 - **Automatic PowerShell 7 Installation**: Installs PowerShell 7 automatically if not present
 - **Intelligent Module Management**: Installs modules to PowerShell 7 specific location for better compatibility
 - **Interactive Configuration**: Prompts for Git user details if not already configured
 - **Smart Detection**: Skips components that are already installed
 - **Error Handling**: Comprehensive error checking with clear status messages
 - **Progress Tracking**: Visual progress indicators throughout installation
-- **Validation**: Verifies each component before proceeding
-- **MDT Support**: Includes commented MDT installation (uncomment if needed)
+- **Post-Installation Verification**: Confirms all components are working correctly
+- **MDT Support**: Includes optional Microsoft Deployment Toolkit installation
 
 ## Running the Setup Script
 
@@ -103,7 +113,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
 
 ```powershell
 # Download the script
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/1eyeITguy/learningITtogether/main/Scripts/OSDCloud/Setup-OSDWorksapce.ps1" -OutFile "$env:TEMP\Setup-OSDWorkspace.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/1eyeITguy/learningITtogether/main/Scripts/OSDCloud/Setup-OSDWorkspace.ps1" -OutFile "$env:TEMP\Setup-OSDWorkspace.ps1"
 
 # Run as Administrator
 Start-Process PowerShell -Verb RunAs -ArgumentList "-File", "$env:TEMP\Setup-OSDWorkspace.ps1"
@@ -119,58 +129,135 @@ The script will ask for:
 
 ## What Happens During Installation
 
-Here's what you'll see during the automated setup:
+Here's what you'll see during the automated setup process:
+
+### Phase 1: System Analysis
+```
++=======================================================================+
+|                 OSD.Workspace Prerequisites Installer               |
+|                             Version 3.0                             |
++=======================================================================+
+
++- Scanning System Prerequisites ------------------------------------
+
+[i] Scanning system for OSDCloud Workspace prerequisites...
+
+  Checking Administrator...
+  Checking PowerShell7...
+  Checking ExecutionPolicy...
+  Checking TLS12...
+  Checking NuGet...
+  Checking PSGallery...
+  Checking PowerShellGet...
+  Checking PackageManagement...
+  Checking Git...
+  Checking VSCodeInsiders...
+  Checking WindowsADK...
+  Checking WindowsPE...
+  Checking MDT...
+  Checking WinPEx86Fix...
+  Checking OSDModules...
+
++=======================================================================+
+|                       PREREQUISITE SCAN RESULTS                     |
++=======================================================================+
+
+ALREADY INSTALLED:
+-----------------
+  [OK] Administrator - Running as Administrator
+  [OK] PowerShell7 - Installed version: 7.4.0 at C:\Program Files\PowerShell\7
+
+NEEDS INSTALLATION:
+------------------
+  [--] Git - Not installed
+       Action: Install Git for Windows
+  [--] VSCodeInsiders - Not installed
+       Action: Install Visual Studio Code Insiders
+
+OPTIONAL COMPONENTS:
+-------------------
+  [i] MDT - Not installed - Optional for DaRT capabilities
+      Action: Install Microsoft Deployment Toolkit (Optional)
+
+SUMMARY:
+-------
+[+] Prerequisites already satisfied: 8
+[!] Prerequisites needing configuration: 0
+[X] Prerequisites needing installation: 6
+[i] Optional components available: 1
+[i] Total required actions: 6
+```
+
+### Phase 2: Installation Process
+After you confirm the installation, you'll see detailed progress for each component:
 
 ```
 +=======================================================================+
-|                OSD.Workspace Prerequisites Installer                 |
-|                             Version 2.3                               |
+|                        INSTALLATION CONFIRMATION                      |
 +=======================================================================+
 
-+- System Prerequisites Check ----------------------------------------
+This script will now install and configure the missing prerequisites.
+The installation may take several minutes depending on your internet connection.
 
-  [+] Running as Administrator - OK
-  [+] Running PowerShell 7.4.0 - OK
-  [i] Current execution policy (CurrentUser scope): RemoteSigned
+Do you want to continue with the installation? (Y/N): Y
 
-+- PowerShell Security Configuration ---------------------------------
++=======================================================================+
+|                         STARTING INSTALLATION                         |
++=======================================================================+
 
-  [i] Current execution policy (CurrentUser scope): RemoteSigned
-  [+] TLS 1.2 protocol configured successfully
+[1/6] Processing: Git
++- Installing and Configuring Git ----------------------------------
+  [i] Installing Git for Windows...
+  [+] Git for Windows installed successfully
+  [+] Git user email configured successfully
+  [+] Git user name configured successfully
+  [+] Git processed successfully
 
-+- NuGet Package Provider --------------------------------------------
-
-  [+] NuGet package provider installed successfully
+[2/6] Processing: VSCodeInsiders
++- Installing Visual Studio Code Insiders --------------------------
+  [i] Installing Visual Studio Code Insiders...
+  [+] Visual Studio Code Insiders installed successfully
+  [+] VSCodeInsiders processed successfully
 
 ... (continues with each component)
+
++=======================================================================+
+|                    INSTALLATION COMPLETED SUCCESSFULLY!               |
++=======================================================================+
+
+VERIFICATION RESULTS:
+--------------------
+[+] Administrator - VERIFIED
+[+] PowerShell7 - VERIFIED
+[+] ExecutionPolicy - VERIFIED
+[+] TLS12 - VERIFIED
+[+] NuGet - VERIFIED
+[+] PSGallery - VERIFIED
+[+] PowerShellGet - VERIFIED
+[+] PackageManagement - VERIFIED
+[+] Git - VERIFIED
+[+] VSCodeInsiders - VERIFIED
+[+] WindowsADK - VERIFIED
+[+] WindowsPE - VERIFIED
+[+] OSDModules - VERIFIED
+
+[i] Verification Summary: 13/13 prerequisites successfully installed
+[+] All prerequisites verified successfully!
 ```
 
 ## Enabling MDT Support (Optional)
 
-If you need Microsoft Deployment Toolkit integration, simply uncomment this section in the script:
+The script now includes **interactive prompts** for optional components like Microsoft Deployment Toolkit (MDT). During the installation process, you'll be asked:
 
-```powershell
-# ===============================================================================
-# MICROSOFT DEPLOYMENT TOOLKIT INSTALLATION
-# ===============================================================================
-
-Write-SectionHeader "Microsoft Deployment Toolkit (MDT)"
-
-try {
-    # Check if MDT is already installed
-    $mdtPath = "${env:ProgramFiles}\Microsoft Deployment Toolkit"
-    if (Test-Path $mdtPath) {
-        Write-Status "Microsoft Deployment Toolkit already installed" "SKIP"
-    } else {
-        Write-Status "Installing Microsoft Deployment Toolkit..." "INFO"
-        winget install --id Microsoft.DeploymentToolkit -e --accept-source-agreements --accept-package-agreements
-        Write-Status "Microsoft Deployment Toolkit installed successfully" "SUCCESS"
-    }
-} catch {
-    Write-Status "Failed to install Microsoft Deployment Toolkit: $($_.Exception.Message)" "ERROR"
-    throw
-}
 ```
+OPTIONAL: Microsoft Deployment Toolkit (MDT)
+MDT provides advanced deployment capabilities including DaRT (Diagnostics and Recovery Toolset).
+Note: DaRT capabilities require Software Assurance (SA) licensing to utilize.
+
+Would you like to install MDT for adding DaRT capabilities to your deployment? (Y/N):
+```
+
+Simply respond **Y** if you want MDT installed, or **N** to skip it. This is much more user-friendly than the previous version that required manual script editing.
 
 ## Post-Installation Steps
 
@@ -204,7 +291,7 @@ This automated setup is just the foundation for your OSDCloud journey. In upcomi
 
 ## The Complete Setup Script
 
-Here's the full automation script for reference:
+Here's the full automation script for reference. The latest version is always available at the GitHub link above.
 
 ```powershell
 #Requires -RunAsAdministrator
@@ -214,18 +301,21 @@ Here's the full automation script for reference:
     OSD.Workspace Prerequisites Installation Script
     
 .DESCRIPTION
-    This script installs and configures all prerequisites for OSD.Workspace development.
+    This script checks and installs all prerequisites for OSD.Workspace development.
     Based on the official OSDeploy documentation: https://github.com/OSDeploy/OSD.Workspace/wiki
+    
+    The script performs a comprehensive scan first, then presents a summary of what
+    is already installed and what needs to be installed before proceeding.
     
     IMPORTANT: Before running this script, you must set the execution policy manually:
     Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
     
-    Components installed:
+    Components checked and installed:
     - PowerShell execution policy and security protocols
     - NuGet package provider
     - Trusted PowerShell Gallery repository
     - PowerShellGet and PackageManagement modules
-    - PowerShell 7 with full configuration (auto-installs if not present)
+    - PowerShell 7 with full configuration
     - Git for Windows with user configuration
     - Visual Studio Code Insiders
     - Windows ADK and Windows PE add-on
@@ -234,7 +324,7 @@ Here's the full automation script for reference:
     
 .NOTES
     Author: Matthew Miles
-    Version: 2.3
+    Version: 3.0
     Requires: Administrator privileges
     
 .LINK
@@ -245,14 +335,20 @@ Here's the full automation script for reference:
 # SCRIPT INITIALIZATION
 # ===============================================================================
 
+Write-Host ""
+Write-Host ""
 Write-Host "+=======================================================================+" -ForegroundColor Cyan
-Write-Host "|                OSD.Workspace Prerequisites Installer                 |" -ForegroundColor Cyan
-Write-Host "|                             Version 2.3                               |" -ForegroundColor Cyan
+Write-Host "|                 OSD.Workspace Prerequisites Installer                 |" -ForegroundColor Cyan
+Write-Host "|                             Version 3.0                               |" -ForegroundColor Cyan
 Write-Host "+=======================================================================+" -ForegroundColor Cyan
 Write-Host ""
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+
+# Global variables for tracking (these will be populated during execution)
+$AllPrerequisites = @()
+$PrerequisiteNames = @()
 
 # Function to write section headers
 function Write-SectionHeader {
@@ -276,6 +372,9 @@ function Write-Status {
         "ERROR" { "Red" }
         "INFO" { "White" }
         "SKIP" { "Gray" }
+        "INSTALLED" { "Green" }
+        "NOT_INSTALLED" { "Red" }
+        "NEEDS_CONFIG" { "Yellow" }
     }
     
     $icon = switch ($Status) {
@@ -284,467 +383,131 @@ function Write-Status {
         "ERROR" { "[X]" }
         "INFO" { "[i]" }
         "SKIP" { "[-]" }
+        "INSTALLED" { "[OK]" }
+        "NOT_INSTALLED" { "[--]" }
+        "NEEDS_CONFIG" { "[!]" }
     }
     
     Write-Host "  $icon " -ForegroundColor $color -NoNewline
     Write-Host $Message -ForegroundColor $color
 }
 
+# Function to check if a command exists
+function Test-CommandExists {
+    param([string]$Command)
+    
+    $cmd = Get-Command $Command -ErrorAction SilentlyContinue
+    return $null -ne $cmd
+}
+
+# Function to get detailed prerequisite status
+function Get-PrerequisiteStatus {
+    param([string]$Name)
+    
+    $status = @{
+        Name = $Name
+        IsInstalled = $false
+        NeedsConfiguration = $false
+        CurrentVersion = $null
+        Details = ""
+        Action = "None"
+        Priority = 0
+        IsOptional = $false
+    }
+    
+    switch ($Name) {
+        "Administrator" {
+            $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+            $status.IsInstalled = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+            $status.Details = if ($status.IsInstalled) { "Running as Administrator" } else { "Must run as Administrator" }
+            $status.Priority = 1
+        }
+        
+        "PowerShell7" {
+            # Check if PowerShell 7 is actually installed on the system (not just the current session)
+            $ps7InstallPath = "${env:ProgramFiles}\PowerShell\7"
+            $ps7Executable = Join-Path $ps7InstallPath "pwsh.exe"
+            $status.IsInstalled = (Test-Path $ps7InstallPath) -and (Test-Path $ps7Executable)
+            
+            if ($status.IsInstalled) {
+                # Get the installed version if PowerShell 7 is installed
+                try {
+                    $ps7Version = & $ps7Executable --version 2>$null
+                    if ($ps7Version) {
+                        $status.CurrentVersion = $ps7Version.Replace("PowerShell ", "")
+                        $status.Details = "Installed version: $($status.CurrentVersion) at $ps7InstallPath"
+                    } else {
+                        $status.CurrentVersion = "Unknown"
+                        $status.Details = "Installed at: $ps7InstallPath"
+                    }
+                } catch {
+                    $status.CurrentVersion = "Unknown"
+                    $status.Details = "Installed at: $ps7InstallPath"
+                }
+            } else {
+                $currentVersion = $PSVersionTable.PSVersion.ToString()
+                $status.Details = "Not installed - Currently running PowerShell $currentVersion"
+                $status.Action = "Install PowerShell 7"
+                $status.Priority = 2
+            }
+        }
+        
+        # ... (Additional prerequisite checks truncated for brevity)
+    }
+    
+    return $status
+}
+
 # ===============================================================================
-# PREREQUISITE CHECKS
+# PREREQUISITE SCANNING PHASE
 # ===============================================================================
 
-Write-SectionHeader "System Prerequisites Check"
+Write-SectionHeader "Scanning System Prerequisites"
 
-# Check if running as Administrator
-$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-$isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-if (-not $isAdmin) {
+# Check administrator privileges first
+$adminStatus = Get-PrerequisiteStatus "Administrator"
+if (-not $adminStatus.IsInstalled) {
     Write-Status "ERROR: This script must be run as Administrator!" "ERROR"
     Write-Status "Please run PowerShell as Administrator and try again." "ERROR"
     Write-Host ""
     Read-Host "Press Enter to exit"
     exit 1
-} else {
-    Write-Status "Running as Administrator - OK" "SUCCESS"
 }
 
-# Check PowerShell version
-$psVersion = $PSVersionTable.PSVersion
-if ($psVersion.Major -lt 7) {
-    Write-Status "PowerShell $($psVersion.ToString()) detected - Installing PowerShell 7..." "WARNING"
-    Write-Status "Installing PowerShell 7 with full configuration..." "INFO"
-    
-    try {
-        $ps7InstallCommand = 'winget install -e --id Microsoft.PowerShell --accept-source-agreements --override "/passive ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1"'
-        $process = Start-Process -FilePath "winget" -ArgumentList "install -e --id Microsoft.PowerShell --accept-source-agreements --override `"/passive ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1`"" -Wait -PassThru -NoNewWindow
-        
-        if ($process.ExitCode -eq 0) {
-            Write-Status "PowerShell 7 installed successfully" "SUCCESS"
-            Write-Status "Continuing with module installations to PowerShell 7 location..." "INFO"
-        } else {
-            Write-Status "PowerShell 7 installation failed with exit code: $($process.ExitCode)" "ERROR"
-            throw "PowerShell 7 installation failed"
-        }
-    } catch {
-        Write-Status "Failed to install PowerShell 7: $($_.Exception.Message)" "ERROR"
-        throw
-    }
-} else {
-    Write-Status "Running PowerShell $($psVersion.ToString()) - OK" "SUCCESS"
-}
+Write-Status "Scanning system for OSDCloud Workspace prerequisites..." "INFO"
+Write-Host ""
 
-# Check execution policy
-$currentPolicy = Get-ExecutionPolicy -Scope CurrentUser
-Write-Status "Current execution policy (CurrentUser scope): $currentPolicy" "INFO"
-
-# Collect Git user information upfront if Git is not installed or not configured
-$gitUserEmail = $null
-$gitUserName = $null
-
-$gitInstalled = Get-Command git -ErrorAction SilentlyContinue
-if ($gitInstalled) {
-    $currentEmail = git config --global user.email 2>$null
-    $currentName = git config --global user.name 2>$null
-    
-    # Only ask for email if it's not configured or has default values
-    if ([string]::IsNullOrWhiteSpace($currentEmail) -or $currentEmail -eq "you@example.com") {
-        Write-Host ""
-        Write-Host "Git is installed but email is not configured." -ForegroundColor Yellow
-        Write-Host "Please enter your email address: " -ForegroundColor Yellow -NoNewline
-        $gitUserEmail = Read-Host
-    } else {
-        Write-Status "Git email already configured: $currentEmail" "SKIP"
-    }
-    
-    # Only ask for name if it's not configured or has default values
-    if ([string]::IsNullOrWhiteSpace($currentName) -or $currentName -eq "Your Name") {
-        Write-Host "Please enter your name: " -ForegroundColor Yellow -NoNewline
-        $gitUserName = Read-Host
-    } else {
-        Write-Status "Git user name already configured: $currentName" "SKIP"
-    }
-} else {
-    Write-Host ""
-    Write-Host "Git is not installed. Please provide your Git configuration:" -ForegroundColor Yellow
-    Write-Host "Please enter your email address: " -ForegroundColor Yellow -NoNewline
-    $gitUserEmail = Read-Host
-    Write-Host "Please enter your name: " -ForegroundColor Yellow -NoNewline
-    $gitUserName = Read-Host
-}
-
-# ===============================================================================
-# POWERSHELL EXECUTION POLICY AND SECURITY SETUP
-# ===============================================================================
-
-Write-SectionHeader "PowerShell Security Configuration"
-
-try {
-    # Note: The execution policy should already be set by the user before running this script
-    $currentPolicy = Get-ExecutionPolicy -Scope CurrentUser
-    Write-Status "Current execution policy (CurrentUser scope): $currentPolicy" "INFO"
-    
-    # Check and set security protocol
-    $currentProtocol = [Net.ServicePointManager]::SecurityProtocol
-    if ($currentProtocol -notmatch 'Tls12') {
-        Write-Status "Configuring TLS 1.2 security protocol..." "INFO"
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Write-Status "TLS 1.2 protocol configured successfully" "SUCCESS"
-    } else {
-        Write-Status "TLS 1.2 protocol already configured" "SKIP"
-    }
-} catch {
-    Write-Status "Failed to configure PowerShell security: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# NUGET PACKAGE PROVIDER INSTALLATION
-# ===============================================================================
-
-Write-SectionHeader "NuGet Package Provider"
-
-try {
-    $nugetProvider = Get-PackageProvider -Name 'NuGet' -ErrorAction SilentlyContinue
-    if (-not $nugetProvider) {
-        Write-Status "Installing NuGet package provider..." "INFO"
-        Install-PackageProvider -Name NuGet -ForceBootstrap -Verbose
-        Write-Status "NuGet package provider installed successfully" "SUCCESS"
-    } else {
-        Write-Status "NuGet package provider already installed (Version: $($nugetProvider.Version))" "SKIP"
-    }
-} catch {
-    Write-Status "Failed to install NuGet package provider: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# POWERSHELL GALLERY REPOSITORY CONFIGURATION
-# ===============================================================================
-
-Write-SectionHeader "PowerShell Gallery Repository"
-
-try {
-    $psGallery = Get-PSRepository -Name 'PSGallery' -ErrorAction SilentlyContinue
-    if ($psGallery -and $psGallery.InstallationPolicy -ne 'Trusted') {
-        Write-Status "Setting PowerShell Gallery as trusted repository..." "INFO"
-        Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-        Write-Status "PowerShell Gallery (PSGallery) has been set to Trusted" "SUCCESS"
-    } elseif ($psGallery) {
-        Write-Status "PowerShell Gallery (PSGallery) is already Trusted" "SKIP"
-    } else {
-        Write-Status "PowerShell Gallery repository not found" "WARNING"
-    }
-} catch {
-    Write-Status "Failed to configure PowerShell Gallery: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# POWERSHELLGET AND PACKAGEMANAGEMENT MODULES
-# ===============================================================================
-
-Write-SectionHeader "PowerShell Core Modules"
-
-# Ensure PowerShell 7 modules path exists and is in PSModulePath
-$ps7ModulesPath = "C:\Program Files\PowerShell\Modules"
-if (!(Test-Path $ps7ModulesPath)) {
-    Write-Status "Creating PowerShell 7 Modules directory..." "INFO"
-    New-Item -Path $ps7ModulesPath -ItemType Directory -Force | Out-Null
-}
-
-# Add PS7 modules path to PSModulePath if not already there
-if ($env:PSModulePath -notlike "*$ps7ModulesPath*") {
-    $env:PSModulePath = "$ps7ModulesPath;$env:PSModulePath"
-    Write-Status "Added PowerShell 7 modules path to PSModulePath" "INFO"
-}
-
-try {
-    # Check and install PowerShellGet
-    $psGetModule = Get-Module -Name PowerShellGet -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
-    if (-not $psGetModule -or $psGetModule.Version -lt [Version]"2.2.5") {
-        Write-Status "Installing/updating PowerShellGet module..." "INFO"
-        Save-Module -Name PowerShellGet -Path $ps7ModulesPath -Repository PSGallery -Force
-        Write-Status "PowerShellGet module installed to PowerShell 7 location successfully" "SUCCESS"
-    } else {
-        Write-Status "PowerShellGet module already up to date (Version: $($psGetModule.Version))" "SKIP"
-    }
-    
-    # Check and install PackageManagement
-    $pkgMgmtModule = Get-Module -Name PackageManagement -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
-    if (-not $pkgMgmtModule -or $pkgMgmtModule.Version -lt [Version]"1.4.7") {
-        Write-Status "Installing/updating PackageManagement module..." "INFO"
-        Save-Module -Name PackageManagement -Path $ps7ModulesPath -Repository PSGallery -Force
-        Write-Status "PackageManagement module installed to PowerShell 7 location successfully" "SUCCESS"
-    } else {
-        Write-Status "PackageManagement module already up to date (Version: $($pkgMgmtModule.Version))" "SKIP"
-    }
-} catch {
-    Write-Status "Failed to install PowerShell core modules: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# GIT FOR WINDOWS INSTALLATION AND CONFIGURATION
-# ===============================================================================
-
-Write-SectionHeader "Git for Windows Installation and Configuration"
-
-try {
-    # Check if Git is already installed
-    $gitInstalled = Get-Command git -ErrorAction SilentlyContinue
-    if ($gitInstalled) {
-        $gitVersion = git --version
-        Write-Status "Git already installed: $gitVersion" "SKIP"
-    } else {
-        Write-Status "Installing Git for Windows..." "INFO"
-        winget install --id Git.Git -e -h --accept-source-agreements
-        Write-Status "Git for Windows installed successfully" "SUCCESS"
-        
-        # Refresh environment variables
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    }
-    
-    # Configure Git user identity using collected information
-    if ($gitUserEmail) {
-        Write-Status "Configuring Git user email: $gitUserEmail" "INFO"
-        git config --global user.email "$gitUserEmail"
-        Write-Status "Git user email configured successfully" "SUCCESS"
-    } else {
-        $currentEmail = git config --global user.email 2>$null
-        if ($currentEmail) {
-            Write-Status "Git user email already configured: $currentEmail" "SKIP"
-        }
-    }
-    
-    if ($gitUserName) {
-        Write-Status "Configuring Git user name: $gitUserName" "INFO"
-        git config --global user.name "$gitUserName"
-        Write-Status "Git user name configured successfully" "SUCCESS"
-    } else {
-        $currentName = git config --global user.name 2>$null
-        if ($currentName) {
-            Write-Status "Git user name already configured: $currentName" "SKIP"
-        }
-    }
-} catch {
-    Write-Status "Failed to install/configure Git: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# VISUAL STUDIO CODE INSIDERS INSTALLATION
-# ===============================================================================
-
-Write-SectionHeader "Visual Studio Code Insiders Installation"
-
-try {
-    # Check if VS Code Insiders is already installed
-    $vscodeInsiders = Get-Command "code-insiders" -ErrorAction SilentlyContinue
-    if ($vscodeInsiders) {
-        Write-Status "Visual Studio Code Insiders already installed" "SKIP"
-    } else {
-        Write-Status "Installing Visual Studio Code Insiders..." "INFO"
-        $vscodeArgs = '/SILENT /mergetasks="!runcode,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"'
-        winget install -e --id Microsoft.VisualStudioCode.Insiders --accept-source-agreements --override $vscodeArgs
-        Write-Status "Visual Studio Code Insiders installed successfully" "SUCCESS"
-    }
-} catch {
-    Write-Status "Failed to install Visual Studio Code Insiders: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# WINDOWS ADK INSTALLATION
-# ===============================================================================
-
-Write-SectionHeader "Windows Assessment and Deployment Kit (ADK)"
-
-try {
-    # Check if Windows ADK is already installed
-    $adkPath = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit"
-    if (Test-Path $adkPath) {
-        Write-Status "Windows ADK already installed" "SKIP"
-    } else {
-        Write-Status "Downloading and installing Windows ADK..." "INFO"
-        $adkUrl = 'https://go.microsoft.com/fwlink/?linkid=2289980'
-        $adkSetupPath = "$env:TEMP\adksetup.exe"
-        
-        # Download ADK setup
-        Invoke-WebRequest -Uri $adkUrl -OutFile $adkSetupPath -UseBasicParsing
-        
-        # Install ADK with required features
-        $adkArgs = @('/features', 'OptionId.DeploymentTools', 'OptionId.ImagingAndConfigurationDesigner', '/quiet', '/ceip', 'off', '/norestart')
-        $adkProcess = Start-Process -FilePath $adkSetupPath -ArgumentList $adkArgs -Wait -PassThru
-        
-        if ($adkProcess.ExitCode -eq 0) {
-            Write-Status "Windows ADK installed successfully" "SUCCESS"
-        } else {
-            Write-Status "Windows ADK installation completed with exit code: $($adkProcess.ExitCode)" "WARNING"
-        }
-        
-        # Clean up
-        Remove-Item $adkSetupPath -Force -ErrorAction SilentlyContinue
-    }
-} catch {
-    Write-Status "Failed to install Windows ADK: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# WINDOWS PE ADD-ON INSTALLATION
-# ===============================================================================
-
-Write-SectionHeader "Windows PE Add-on for Windows ADK"
-
-try {
-    # Check if Windows PE add-on is already installed
-    $winpePath = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment"
-    if (Test-Path $winpePath) {
-        Write-Status "Windows PE add-on already installed" "SKIP"
-    } else {
-        Write-Status "Downloading and installing Windows PE add-on..." "INFO"
-        $winpeUrl = 'https://go.microsoft.com/fwlink/?linkid=2289981'
-        $winpeSetupPath = "$env:TEMP\adkwinpesetup.exe"
-        
-        # Download Windows PE add-on setup
-        Invoke-WebRequest -Uri $winpeUrl -OutFile $winpeSetupPath -UseBasicParsing
-        
-        # Install Windows PE add-on
-        $winpeArgs = @('/features', 'OptionId.WindowsPreinstallationEnvironment', '/quiet', '/ceip', 'off', '/norestart')
-        $winpeProcess = Start-Process -FilePath $winpeSetupPath -ArgumentList $winpeArgs -Wait -PassThru
-        
-        if ($winpeProcess.ExitCode -eq 0) {
-            Write-Status "Windows PE add-on installed successfully" "SUCCESS"
-        } else {
-            Write-Status "Windows PE add-on installation completed with exit code: $($winpeProcess.ExitCode)" "WARNING"
-        }
-        
-        # Clean up
-        Remove-Item $winpeSetupPath -Force -ErrorAction SilentlyContinue
-    }
-} catch {
-    Write-Status "Failed to install Windows PE add-on: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# MDT WINPE X86 BUGFIX
-# ===============================================================================
-
-Write-SectionHeader "MDT WinPE x86 Bugfix"
-
-try {
-    $winpeOCsPath = 'C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs'
-    if (Test-Path $winpeOCsPath) {
-        Write-Status "WinPE x86 OCs directory already exists" "SKIP"
-    } else {
-        Write-Status "Creating WinPE x86 OCs directory for MDT compatibility..." "INFO"
-        New-Item -Path $winpeOCsPath -ItemType Directory -Force | Out-Null
-        Write-Status "WinPE x86 OCs directory created successfully" "SUCCESS"
-    }
-} catch {
-    Write-Status "Failed to create WinPE x86 OCs directory: $($_.Exception.Message)" "ERROR"
-    throw
-}
-
-# ===============================================================================
-# MICROSOFT DEPLOYMENT TOOLKIT INSTALLATION
-# ===============================================================================
-
-<##
-Write-SectionHeader "Microsoft Deployment Toolkit (MDT)"
-
-try {
-    # Check if MDT is already installed
-    $mdtPath = "${env:ProgramFiles}\Microsoft Deployment Toolkit"
-    if (Test-Path $mdtPath) {
-        Write-Status "Microsoft Deployment Toolkit already installed" "SKIP"
-    } else {
-        Write-Status "Installing Microsoft Deployment Toolkit..." "INFO"
-        winget install --id Microsoft.DeploymentToolkit -e --accept-source-agreements --accept-package-agreements
-        Write-Status "Microsoft Deployment Toolkit installed successfully" "SUCCESS"
-    }
-} catch {
-    Write-Status "Failed to install Microsoft Deployment Toolkit: $($_.Exception.Message)" "ERROR"
-    throw
-}
-#>
-
-# ===============================================================================
-# OSD POWERSHELL MODULES INSTALLATION
-# ===============================================================================
-
-Write-SectionHeader "OSD PowerShell Modules"
-
-# Ensure PowerShell 7 modules path exists and is in PSModulePath
-$ps7ModulesPath = "C:\Program Files\PowerShell\Modules"
-if (!(Test-Path $ps7ModulesPath)) {
-    Write-Status "Creating PowerShell 7 Modules directory..." "INFO"
-    New-Item -Path $ps7ModulesPath -ItemType Directory -Force | Out-Null
-}
-
-# Add PS7 modules path to PSModulePath if not already there
-if ($env:PSModulePath -notlike "*$ps7ModulesPath*") {
-    $env:PSModulePath = "$ps7ModulesPath;$env:PSModulePath"
-    Write-Status "Added PowerShell 7 modules path to PSModulePath" "INFO"
-}
-
-$modules = @(
-    @{ Name = "OSD.Workspace"; Description = "The main OSDWorkspace PowerShell Module" },
-    @{ Name = "platyPS"; Description = "Required for creating OSDWorkspace help files" },
-    @{ Name = "OSD"; Description = "Used in some of the OSDWorkspace functions" },
-    @{ Name = "OSDCloud"; Description = "Optionally used in some of the OSDWorkspace Gallery functions" }
+# Define all prerequisites to check
+$PrerequisiteNames = @(
+    "Administrator",
+    "PowerShell7", 
+    "ExecutionPolicy",
+    "TLS12",
+    "NuGet",
+    "PSGallery", 
+    "PowerShellGet",
+    "PackageManagement",
+    "Git",
+    "VSCodeInsiders",
+    "WindowsADK",
+    "WindowsPE",
+    "MDT",
+    "WinPEx86Fix",
+    "OSDModules"
 )
 
-foreach ($module in $modules) {
-    try {
-        # Check if module is already installed in PS7 location
-        $modulePath = Join-Path $ps7ModulesPath $module.Name
-        if (Test-Path $modulePath) {
-            Write-Status "$($module.Name) already installed in PowerShell 7 location" "SKIP"
-        } else {
-            Write-Status "Installing $($module.Name) module to PowerShell 7 location - $($module.Description)..." "INFO"
-            Save-Module -Name $module.Name -Path $ps7ModulesPath -Repository PSGallery -Force
-            Write-Status "$($module.Name) module installed to PowerShell 7 location successfully" "SUCCESS"
-        }
-    } catch {
-        Write-Status "Failed to install $($module.Name) module: $($_.Exception.Message)" "ERROR"
-        throw
-    }
+# Scan all prerequisites
+$AllPrerequisites = @()
+foreach ($prereqName in $PrerequisiteNames) {
+    Write-Host "  Checking $prereqName..." -ForegroundColor Gray
+    $status = Get-PrerequisiteStatus $prereqName
+    $AllPrerequisites += $status
 }
 
-# ===============================================================================
-# SCRIPT COMPLETION
-# ===============================================================================
+# ... (Rest of the script continues with installation logic)
 
-Write-Host ""
-Write-Host "+=======================================================================+" -ForegroundColor Green
-Write-Host "|                    INSTALLATION COMPLETED SUCCESSFULLY!               |" -ForegroundColor Green
-Write-Host "+=======================================================================+" -ForegroundColor Green
-Write-Host ""
-
-Write-Status "All OSDCloud Workspace prerequisites have been installed successfully!" "SUCCESS"
-Write-Status "You can now proceed with creating your OSD workspace." "INFO"
-Write-Host ""
-
-Write-Host "NEXT STEPS:" -ForegroundColor Cyan
-Write-Host "----------" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "1. Open PowerShell 7 and run:" -ForegroundColor Yellow
-Write-Host "   Install-OSDWorkspace" -ForegroundColor Cyan
-Write-Host "   This will create your OSD workspace directory." -ForegroundColor White
-Write-Host ""
-Write-Host "2. Open the workspace in VS Code Insiders:" -ForegroundColor Yellow
-Write-Host "   cd C:\OSDWorkspace" -ForegroundColor Cyan
-Write-Host "   code-insiders ." -ForegroundColor Cyan
-Write-Host "   This will open your workspace in VS Code Insiders." -ForegroundColor White
-Write-Host ""
-Write-Host "3. Your OSD workspace will be located at:" -ForegroundColor Yellow
-Write-Host "   C:\OSDWorkspace" -ForegroundColor Cyan
-Write-Host ""
-
-Write-Host ""
-Write-Host "Script execution completed at $(Get-Date)" -ForegroundColor Gray
+# Note: The complete script is available at the GitHub repository link
+# This is a simplified version showing the key structure and improvements
 ```
+
+> **Note**: Due to the script's length (over 1000 lines), I'm showing the key structural improvements here. The complete, fully functional script is available at the GitHub repository link above.
