@@ -134,8 +134,8 @@ Here's what you'll see during the automated setup process:
 ### Phase 1: System Analysis
 ```
 +=======================================================================+
-|                 OSD.Workspace Prerequisites Installer               |
-|                             Version 3.0                             |
+|                 OSD.Workspace Prerequisites Installer                 |
+|                             Version 3.0                               |
 +=======================================================================+
 
 +- Scanning System Prerequisites ------------------------------------
@@ -159,7 +159,7 @@ Here's what you'll see during the automated setup process:
   Checking OSDModules...
 
 +=======================================================================+
-|                       PREREQUISITE SCAN RESULTS                     |
+|                       PREREQUISITE SCAN RESULTS                       |
 +=======================================================================+
 
 ALREADY INSTALLED:
