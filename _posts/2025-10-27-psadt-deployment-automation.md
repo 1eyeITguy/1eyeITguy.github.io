@@ -153,7 +153,7 @@ The script provides excellent visibility throughout the process:
 ### Prerequisites
 - **PowerShell 7.0 or later** (required)
 - **Internet connection** for module updates and asset downloads
-- **Administrator privileges** recommended for AllUsers scope
+- **Administrator privileges** 
 
 ### Basic Usage
 
